@@ -67,4 +67,4 @@ class SheetView with XmlNodeWrapper {
   int get workbookViewId => node.getAttribute("workbookViewId").asIntOrNull()!;
 }
 ```
-上方xml代码块与dart代码块是相互转换的关系，接下来你将作为转换器，当我向你输入xml时，你需要给出dart代码，当我输入dart代码时，你需要给出xml。
+The XML code block and the Dart code block above are in a mutually interchangeable relationship. Next, you will act as a converter. When I input XML to you, you need to provide Dart code. When I input Dart code, you need to provide XML.

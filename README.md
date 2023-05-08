@@ -1,39 +1,15 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# fl_xlsx
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+a pure dart library for large xlsx file
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+highly inspired by [excel](https://github.com/justkawal/excel)
+and [go-excelize](https://github.com/qax-os/excelize)
+ 
+strongly supported by ChatGPT
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Reference
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+- [ISO/IEC 29500-1-2016](https://www.iso.org/en/contents/data/standard/07/16/71691.html)
+- [ISO/IEC 29500-2-2021](https://www.iso.org/en/contents/data/standard/07/78/77818.html)
+- [ISO/IEC 29500-3-2015](https://www.iso.org/en/contents/data/standard/06/55/65533.html)
+- [ISO/IEC 29500-4-2016](https://www.iso.org/en/contents/data/standard/07/16/71692.html)
