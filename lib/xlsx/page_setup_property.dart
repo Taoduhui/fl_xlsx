@@ -7,7 +7,7 @@ class PageSetupProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  bool get autoPageBreaks => node.getAttribute("autoPageBreaks").asBoolOrTrue();
+  bool get autoPageBreaks => node.getAttribute("*autoPageBreaks").asBoolOrTrue();
 
-  bool get fitToPage => node.getAttribute("fitToPage").asBoolOrFalse();
+  bool get fitToPage => node.getAttribute("*fitToPage").asBoolOrFalse();
 }

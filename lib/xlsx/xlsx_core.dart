@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import '../xml/xml_core.dart';
+import 'package:large_xml/large_xml.dart';
+// import '../xml/xml_core.dart';
 
 part 'relationship.dart';
 part 'workbook.dart';
@@ -26,53 +27,56 @@ part 'xml_utils.dart';
 part 'sheet_data.dart';
 part 'worksheet.dart';
 part 'config.dart';
+part 'merge_cell.dart';
 
 class ExcelFile{
 
-  late Archive archive;
-  late ExcelConfig config;
+  late Archive _archive;
+
+  late ExcelConfig _config;
+  ExcelConfig get config => _config;
 
   ExcelFile.fromBytes(Uint8List bytes,{ExcelConfig? config}){
-    archive = ZipDecoder().decodeBytes(bytes);
-    this.config = config??ExcelConfig();
+    _archive = ZipDecoder().decodeBytes(bytes);
+    _config = config??ExcelConfig();
     _init();
   }
 
-  Map<String,SheetDocument> documents = {};
+  final Map<String,SheetDocument> _documents = {};
+  final Map<String,dynamic> _docRefs = {};
 
-  late Relationships relationships;
+  late Relationships _relationships;
   late WorkBook workbook;
 
   void _init(){
     _initRelationships();
   }
 
-  SheetDocument openFile(String path){
-    if(!documents.containsKey(path)){
-      var rel = archive.findFile(path);
+  T _openFile<T>(String path,T Function(SheetDocument doc) builder){
+    if(!_documents.containsKey(path)){
+      var rel = _archive.findFile(path);
       if(rel != null){
         rel.decompress();
         var doc = SheetDocument.fromString(utf8.decode(rel.content),path);
-        documents[path] = doc;
+        _documents[path] = doc;
       }else{
         throw Exception("file not found");
       }
     }
-    return documents[path]!;
+    _docRefs[path] = builder(_documents[path]!);
+    return _docRefs[path]!;
   }
 
   void _initRelationships(){
     var pkgRels = "_rels/.rels";
-    var doc = openFile(pkgRels);
-    relationships = Relationships(this,doc.root);
-    var bookRels = relationships.where((r) => r.type == RelationshipType.officeDocument);
+    _relationships = _openFile(pkgRels,(doc)=> Relationships(this,doc.root));
+    var bookRels = _relationships.where((r) => r.type == RelationshipType.officeDocument);
     if(bookRels.isEmpty) throw Exception("broken file");
     var bookRel = bookRels.first;
     _initWorkBook(bookRel.target.absolutePath(""));
   }
 
   void _initWorkBook(String path){
-    var doc = openFile(path);
-    workbook = WorkBook(this,doc.root);
+    workbook = _openFile(path,(doc)=>WorkBook(this,doc.root));
   }
 }

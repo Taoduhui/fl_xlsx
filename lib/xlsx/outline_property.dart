@@ -7,11 +7,11 @@ class OutlineProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  bool get applyStyles => node.getAttribute("applyStyles").asBoolOrFalse();
+  bool get applyStyles => node.getAttribute("*applyStyles").asBoolOrFalse();
 
-  bool get summaryBelow => node.getAttribute("summaryBelow").asBoolOrTrue();
+  bool get summaryBelow => node.getAttribute("*summaryBelow").asBoolOrTrue();
 
-  bool get summaryRight => node.getAttribute("summaryRight").asBoolOrTrue();
+  bool get summaryRight => node.getAttribute("*summaryRight").asBoolOrTrue();
 
-  bool get showOutlineSymbols => node.getAttribute("showOutlineSymbols").asBoolOrTrue();
+  bool get showOutlineSymbols => node.getAttribute("*showOutlineSymbols").asBoolOrTrue();
 }

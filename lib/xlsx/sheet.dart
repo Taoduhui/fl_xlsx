@@ -9,7 +9,7 @@ class SheetsIterator extends XmlChildNodeIterator<Sheet>{
   Sheet build(XmlNode n) => Sheet(file,n);
 
   @override
-  bool selector(XmlNode n) => n.type == XmlElementType.Normal && n.name.removeNamespace() == "sheet";
+  bool selector(XmlNode n) => n.type == XmlElementType.start && n.name.removeNamespace() == "sheet";
 
 }
 
@@ -61,16 +61,15 @@ class Sheet with XmlNodeWrapper {
     this.node = node;
   }
 
-  String get name => node.getAttribute("name") ?? "";
-  int get sheetId => node.getAttribute("sheetId").asIntOrNull()!;
-  SheetState get state => SheetStateExt.parse(node.getAttribute("state") ?? "visible")!;
-  String get rid => node.getAttribute("r:id") ?? "";
+  String get name => node.getAttribute("*name") ?? "";
+  int get sheetId => node.getAttribute("*sheetId").asIntOrNull()!;
+  SheetState get state => SheetStateExt.parse(node.getAttribute("*state") ?? "visible")!;
+  String get rid => node.getAttribute("*r:id") ?? "";
 
   WorkSheet get workSheet{
-     var workSheetRel = file.workbook.relationships.firstWhere((rel) => rel.id == rid);
+     var workSheetRel = file.workbook._relationships.firstWhere((rel) => rel.id == rid);
      var workSheetPath = workSheetRel.target.absolutePath(node.sheetDoc.path.directory);
-     SheetDocument workSheetDoc = file.openFile(workSheetPath);
-     return WorkSheet(file, workSheetDoc.root);
+     return file._openFile(workSheetPath,(doc)=>WorkSheet(file, doc));
   }
 }
 

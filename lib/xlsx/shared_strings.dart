@@ -8,7 +8,7 @@ class SharedStringItemsIterator extends XmlChildNodeIterator<SharedStringItem>{
   SharedStringItem build(XmlNode n) => SharedStringItem(file,n);
 
   @override
-  bool selector(XmlNode n) => n.type == XmlElementType.Normal && n.name.removeNamespace() == "si";
+  bool selector(XmlNode n) => n.type == XmlElementType.start && n.name.removeNamespace() == "si";
 }
 
 class SharedStringItems extends Iterable<SharedStringItem> with XmlNodeWrapper{
@@ -27,7 +27,7 @@ class SharedStringTable with XmlNodeWrapper{
   late List<SharedStringItem> cachedSharedStrings;
 
   SharedStringItem at(int idx){
-    if(file.config.enableSharedStringCache){
+    if(file._config.enableSharedStringCache){
       return cachedSharedStrings[idx];
     }
     return items.elementAt(idx);
@@ -35,16 +35,16 @@ class SharedStringTable with XmlNodeWrapper{
 
   SharedStringTable(this.file,XmlNode node){
     this.node = node;
-    if(file.config.enableSharedStringCache){
+    if(file._config.enableSharedStringCache){
       cachedSharedStrings = items.toList();
     }
   }
 
   SharedStringItems get items => SharedStringItems(file,node);
 
-  int? get count => node.getAttribute("count").asIntOrNull();
+  int? get count => node.getAttribute("*count").asIntOrNull();
 
-  int? get uniqueCount => node.getAttribute("uniqueCount").asIntOrNull();
+  int? get uniqueCount => node.getAttribute("*uniqueCount").asIntOrNull();
 }
 
 
@@ -57,9 +57,9 @@ class SharedStringItem with XmlNodeWrapper{
   }
 
   XStringProperty? get text{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "t");
-    if(_node != null){
-      return XStringProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "t");
+    if(cnode != null){
+      return XStringProperty(file,cnode);
     }
     return null;
   }
@@ -69,14 +69,14 @@ class SharedStringItem with XmlNodeWrapper{
   RichTextRuns get richTextRuns => RichTextRuns(file,node);
 
   PhoneticRunProperties? get phoneticRunsProperties{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "phoneticPr");
-    if(_node != null){
-      return PhoneticRunProperties(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "phoneticPr");
+    if(cnode != null){
+      return PhoneticRunProperties(file,cnode);
     }
     return null;
   }
 
-  int? get uniqueCount => node.getAttribute("uniqueCount").asIntOrNull();
+  int? get uniqueCount => node.getAttribute("*uniqueCount").asIntOrNull();
 }
 
 class RichTextRunsIterator extends XmlChildNodeIterator<RichTextRun>{
@@ -88,7 +88,7 @@ class RichTextRunsIterator extends XmlChildNodeIterator<RichTextRun>{
   RichTextRun build(XmlNode n) => RichTextRun(file, n);
 
   @override
-  bool selector(XmlNode n) => n.type == XmlElementType.Normal && n.name.removeNamespace() == "r";
+  bool selector(XmlNode n) => n.type == XmlElementType.start && n.name.removeNamespace() == "r";
 
 }
 
@@ -113,17 +113,17 @@ class RichTextRun with XmlNodeWrapper{
   }
 
   RichTextRunProperties? get runProperties{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "rPr");
-    if(_node != null){
-      return RichTextRunProperties(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "rPr");
+    if(cnode != null){
+      return RichTextRunProperties(file,cnode);
     }
     return null;
   }
 
   XStringProperty get text{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "t");
-    if(_node != null){
-      return XStringProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "t");
+    if(cnode != null){
+      return XStringProperty(file,cnode);
     }
     throw Exception("here should be a 't' element but not found: ${node.start}");
   }
@@ -138,121 +138,121 @@ class RichTextRunProperties with XmlNodeWrapper{
   }
 
   FontNameProperty? get fontName{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "rFont");
-    if(_node != null){
-      return FontNameProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "rFont");
+    if(cnode != null){
+      return FontNameProperty(file,cnode);
     }
     return null;
   }
 
   IntProperty? get charset{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "charset");
-    if(_node != null){
-      return IntProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "charset");
+    if(cnode != null){
+      return IntProperty(file,cnode);
     }
     return null;
   }
 
   IntProperty? get family{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "family");
-    if(_node != null){
-      return IntProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "family");
+    if(cnode != null){
+      return IntProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get bold{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "b");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "b");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get italic{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "i");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "i");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get strike{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "strike");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "strike");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get outline{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "outline");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "outline");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get shadow{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "shadow");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "shadow");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get condense{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "condense");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "condense");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   BooleanProperty? get extend{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "extend");
-    if(_node != null){
-      return BooleanProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "extend");
+    if(cnode != null){
+      return BooleanProperty(file,cnode);
     }
     return null;
   }
 
   ColorProperty? get color{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "color");
-    if(_node != null){
-      return ColorProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "color");
+    if(cnode != null){
+      return ColorProperty(file,cnode);
     }
     return null;
   }
 
   FontSizeProperty? get fontSize{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "sz");
-    if(_node != null){
-      return FontSizeProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "sz");
+    if(cnode != null){
+      return FontSizeProperty(file,cnode);
     }
     return null;
   }
 
   UnderlineProperty? get underline{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "u");
-    if(_node != null){
-      return UnderlineProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "u");
+    if(cnode != null){
+      return UnderlineProperty(file,cnode);
     }
     return null;
   }
 
   VerticalAlignFontProperty? get vertAlign{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "vertAlign");
-    if(_node != null){
-      return VerticalAlignFontProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "vertAlign");
+    if(cnode != null){
+      return VerticalAlignFontProperty(file,cnode);
     }
     return null;
   }
 
   FontSchemeProperty? get scheme{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "scheme");
-    if(_node != null){
-      return FontSchemeProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "scheme");
+    if(cnode != null){
+      return FontSchemeProperty(file,cnode);
     }
     return null;
   }
@@ -268,7 +268,7 @@ class PhoneticRunsIterator extends XmlChildNodeIterator<PhoneticRun>{
   PhoneticRun build(XmlNode n) => PhoneticRun(file, n);
 
   @override
-  bool selector(XmlNode n) => n.type == XmlElementType.Normal && n.name.removeNamespace() == "rPh";
+  bool selector(XmlNode n) => n.type == XmlElementType.start && n.name.removeNamespace() == "rPh";
 
 }
 
@@ -293,15 +293,15 @@ class PhoneticRun with XmlNodeWrapper{
   }
 
   XStringProperty? get text{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "t");
-    if(_node != null){
-      return XStringProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "t");
+    if(cnode != null){
+      return XStringProperty(file,cnode);
     }
     return null;
   }
 
-  int get starterBaselineAlignment => node.getAttribute("sb").asIntOrNull()!;
-  int get endingBaselineAlignment => node.getAttribute("eb").asIntOrNull()!;
+  int get starterBaselineAlignment => node.getAttribute("*sb").asIntOrNull()!;
+  int get endingBaselineAlignment => node.getAttribute("*eb").asIntOrNull()!;
 }
 
 /// CT_PhoneticPr
@@ -313,15 +313,15 @@ class PhoneticRunProperties with XmlNodeWrapper{
   }
 
   FontIdProperty? get fontId{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "fontId");
-    if(_node != null){
-      return FontIdProperty(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "fontId");
+    if(cnode != null){
+      return FontIdProperty(file,cnode);
     }
     return null;
   }
 
-  PhoneticType get type => PhoneticTypeExt.parse(node.getAttribute("type") ?? "fullwidthKatakana")!;
+  PhoneticType get type => PhoneticTypeExt.parse(node.getAttribute("*type") ?? "fullwidthKatakana")!;
 
-  PhoneticAlignment get alignment => PhoneticAlignmentExt.parse(node.getAttribute("alignment") ?? "left")!;
+  PhoneticAlignment get alignment => PhoneticAlignmentExt.parse(node.getAttribute("*alignment") ?? "left")!;
 }
 

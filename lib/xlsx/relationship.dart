@@ -8,7 +8,7 @@ class RelationshipsIterator extends XmlChildNodeIterator<Relationship>{
   Relationship build(XmlNode n) => Relationship(n);
 
   @override
-  bool selector(XmlNode n) => n.type == XmlElementType.Normal && n.name.removeNamespace() == "Relationship";
+  bool selector(XmlNode n) => n.type == XmlElementType.start && n.name.removeNamespace() == "Relationship";
 }
 
 class Relationships extends Iterable<Relationship> with XmlNodeWrapper{
@@ -122,11 +122,11 @@ class Relationship with XmlNodeWrapper{
     this.node = node;
   }
 
-  String get id => node.getAttribute("Id")??"";
+  String get id => node.getAttribute("*Id")??"";
 
-  String get target => node.getAttribute("Target")??"";
+  String get target => node.getAttribute("*Target")??"";
 
-  RelationshipType get type => RelationshipTypeExt.parse(node.getAttribute("Type")??"")!;
+  RelationshipType get type => RelationshipTypeExt.parse(node.getAttribute("*Type")??"")!;
 
-  RelationshipTargetMode get targetMode => RelationshipTargetModeExt.parse(node.getAttribute("TargetMode")??"")!;
+  RelationshipTargetMode get targetMode => RelationshipTargetModeExt.parse(node.getAttribute("*TargetMode")??"")!;
 }

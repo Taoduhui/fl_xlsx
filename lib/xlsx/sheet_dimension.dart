@@ -7,6 +7,6 @@ class SheetDimension with XmlNodeWrapper{
     this.node = node;
   }
 
-  String get reference => node.getAttribute("ref") ?? "";
+  String get reference => node.getAttribute("*ref") ?? "";
 
 }

@@ -6,9 +6,9 @@ class Pane with XmlNodeWrapper{
     this.node = node;
   }
 
-  double get xSplit => node.getAttribute("xSplit").asDoubleOrDefault(0.0);
-  double get ySplit => node.getAttribute("ySplit").asDoubleOrDefault(0.0);
-  String? get topLeftCell => node.getAttribute("topLeftCell");
-  PaneType get activePane => PaneTypeExt.parse(node.getAttribute("activePane")??"topLeft");
-  PaneState get state => PaneStateExt.parse(node.getAttribute("state")??"split");
+  double get xSplit => node.getAttribute("*xSplit").asDoubleOrDefault(0.0);
+  double get ySplit => node.getAttribute("*ySplit").asDoubleOrDefault(0.0);
+  String? get topLeftCell => node.getAttribute("*topLeftCell");
+  PaneType get activePane => PaneTypeExt.parse(node.getAttribute("*activePane")??"topLeft");
+  PaneState get state => PaneStateExt.parse(node.getAttribute("*state")??"split");
 }

@@ -3,28 +3,26 @@ part of "./xlsx_core.dart";
 /// Base on ISO/IEC 29500-1:2016 Page 3948 PDF 3958
 class WorkBook with XmlNodeWrapper{
 
-  late Relationships relationships;
-  late SharedStringTable sharedStringTable;
+  late Relationships _relationships;
+  late SharedStringTable _sharedStringTable;
   ExcelFile file;
 
   WorkBook(this.file,XmlNode node){
     this.node = node;
     var workbookDir = node.sheetDoc.path.directory;
     var bookRelsPath = "${workbookDir}/_rels/workbook.xml.rels";
-    SheetDocument bookRels = file.openFile(bookRelsPath);
-    relationships = Relationships(file,bookRels.root);
-    var sharedStringsRel = relationships.firstWhereOrNull((rel) => rel.type == RelationshipType.sharedStrings);
+    _relationships = file._openFile(bookRelsPath,(doc)=>Relationships(file,doc.root));
+    var sharedStringsRel = _relationships.firstWhereOrNull((rel) => rel.type == RelationshipType.sharedStrings);
     if(sharedStringsRel != null){
       var sharedStringsPath = sharedStringsRel.target.absolutePath(workbookDir);
-      SheetDocument sharedStringTableDoc = file.openFile(sharedStringsPath);
-      sharedStringTable = SharedStringTable(file,sharedStringTableDoc.root);
+      _sharedStringTable = file._openFile(sharedStringsPath,(doc)=>SharedStringTable(file,doc.root));
     }
   }
 
   Sheets get sheets{
-    var _node = node.into(selector: (c)=>c.type == XmlElementType.Normal && c.name.removeNamespace() == "sheets");
-    if(_node != null){
-      return Sheets(file,_node);
+    var cnode = node.into(selector: (c)=>c.type == XmlElementType.start && c.name.removeNamespace() == "sheets");
+    if(cnode != null){
+      return Sheets(file,cnode);
     }
     throw Exception("broken file: workbook no sheets");
   }

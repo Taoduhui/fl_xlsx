@@ -6,8 +6,8 @@ class Selection with XmlNodeWrapper {
     this.node = node;
   }
 
-  PaneType get pane => PaneTypeExt.parse(node.getAttribute("pane")??"topLeft");
-  String? get activeCell => node.getAttribute("activeCell");
-  int get activeCellId => node.getAttribute("activeCellId").asIntOrDefault(0);
-  String get sqref => node.getAttribute("sqref")??"A1";
+  PaneType get pane => PaneTypeExt.parse(node.getAttribute("*pane")??"topLeft");
+  String? get activeCell => node.getAttribute("*activeCell");
+  int get activeCellId => node.getAttribute("*activeCellId").asIntOrDefault(0);
+  String get sqref => node.getAttribute("*sqref")??"A1";
 }

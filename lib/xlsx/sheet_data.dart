@@ -8,7 +8,7 @@ class SheetDataIterator extends XmlChildNodeIterator<SheetRow>{
   SheetRow build(XmlNode n) => SheetRow(file,n);
 
   @override
-  bool selector(XmlNode n) => n.type == XmlElementType.Normal && n.name.removeNamespace() == "row";
+  bool selector(XmlNode n) => n.type == XmlElementType.start && n.name.removeNamespace() == "row";
 }
 
 class SheetData extends Iterable<SheetRow> with XmlNodeWrapper {

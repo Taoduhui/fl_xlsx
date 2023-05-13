@@ -174,7 +174,7 @@ class FontNameProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  String get val => node.getAttribute("val")!;
+  String get val => node.getAttribute("*val")!;
 }
 
 /// CT_FontSize
@@ -185,7 +185,7 @@ class FontSizeProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  double get val => node.getAttribute("val").asDoubleOrNull()!;
+  double get val => node.getAttribute("*val").asDoubleOrNull()!;
 }
 
 enum UnderlineValues {
@@ -236,7 +236,7 @@ class UnderlineProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  UnderlineValues? get val => UnderlineValuesExt.parse(node.getAttribute("val") ?? "single");
+  UnderlineValues? get val => UnderlineValuesExt.parse(node.getAttribute("*val") ?? "single");
 }
 
 enum VerticalAlignRun {
@@ -278,7 +278,7 @@ class VerticalAlignFontProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  VerticalAlignRun get val => VerticalAlignRunExt.parse(node.getAttribute("val") ?? "")!;
+  VerticalAlignRun get val => VerticalAlignRunExt.parse(node.getAttribute("*val") ?? "")!;
 }
 
 
@@ -290,7 +290,7 @@ class IntProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  int get val => node.getAttribute("val").asIntOrNull()!;
+  int get val => node.getAttribute("*val").asIntOrNull()!;
 }
 
 /// CT_BooleanProperty
@@ -301,7 +301,7 @@ class BooleanProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  bool get val => node.getAttribute("val").asBoolOrTrue()!;
+  bool get val => node.getAttribute("*val").asBoolOrTrue();
 }
 
 class ColorProperty with XmlNodeWrapper{
@@ -311,15 +311,15 @@ class ColorProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  bool? get auto => node.getAttribute("auto").asBoolOrNull();
+  bool? get auto => node.getAttribute("*auto").asBoolOrNull();
 
-  int? get indexed => node.getAttribute("indexed").asIntOrNull();
+  int? get indexed => node.getAttribute("*indexed").asIntOrNull();
 
-  String? get rgb => node.getAttribute("rgb");
+  String? get rgb => node.getAttribute("*rgb");
 
-  int? get theme => node.getAttribute("theme").asIntOrNull();
+  int? get theme => node.getAttribute("*theme").asIntOrNull();
 
-  double? get tint => node.getAttribute("tint").asDoubleOrDefault(0.0);
+  double? get tint => node.getAttribute("*tint").asDoubleOrDefault(0.0);
 }
 
 enum FontScheme {
@@ -360,7 +360,7 @@ class FontSchemeProperty with XmlNodeWrapper{
     this.node = node;
   }
 
-  FontScheme get val => FontSchemeExt.parse(node.getAttribute("val") ?? "")!;
+  FontScheme get val => FontSchemeExt.parse(node.getAttribute("*val") ?? "")!;
 }
 
 /// ST_Xstring
@@ -373,6 +373,9 @@ class XStringProperty with XmlNodeWrapper{
 
   String get val => node.innerXML;
 }
+
+
+
 
 /// ST_FontId
 class FontIdProperty with XmlNodeWrapper{
@@ -454,3 +457,4 @@ extension PhoneticAlignmentExt on PhoneticAlignment {
     }
   }
 }
+

@@ -54,17 +54,17 @@ class SheetView with XmlNodeWrapper {
     this.node = node;
   }
 
-  bool get windowProtection => node.getAttribute("windowProtection").asBoolOrFalse();
-  bool get showGridLines => node.getAttribute("showGridLines").asBoolOrTrue();
-  bool get showRowColHeaders => node.getAttribute("showRowColHeaders").asBoolOrNull();
-  SheetViewType get viewType =>  SheetViewTypeExt.parse(node.getAttribute("view")??"normal");
-  String? get topLeftCell => node.getAttribute("topLeftCell");
-  int get colorId => node.getAttribute("colorId").asIntOrDefault(64);
-  double get zoomScale => node.getAttribute("zoomScale").asDoubleOrDefault(0.0);
-  int? get zoomScaleNormal => node.getAttribute("zoomScaleNormal").asIntOrNull();
-  double? get zoomScaleSheetLayoutView => node.getAttribute("zoomScaleSheetLayoutView").asDoubleOrNull();
-  double get zoomScalePageLayoutView => node.getAttribute("zoomScalePageLayoutView").asDoubleOrNull()!;
-  int get workbookViewId => node.getAttribute("workbookViewId").asIntOrNull()!;
+  bool get windowProtection => node.getAttribute("*windowProtection").asBoolOrFalse();
+  bool get showGridLines => node.getAttribute("*showGridLines").asBoolOrTrue();
+  bool get showRowColHeaders => node.getAttribute("*showRowColHeaders").asBoolOrNull();
+  SheetViewType get viewType =>  SheetViewTypeExt.parse(node.getAttribute("*view")??"normal");
+  String? get topLeftCell => node.getAttribute("*topLeftCell");
+  int get colorId => node.getAttribute("*colorId").asIntOrDefault(64);
+  double get zoomScale => node.getAttribute("*zoomScale").asDoubleOrDefault(0.0);
+  int? get zoomScaleNormal => node.getAttribute("*zoomScaleNormal").asIntOrNull();
+  double? get zoomScaleSheetLayoutView => node.getAttribute("*zoomScaleSheetLayoutView").asDoubleOrNull();
+  double get zoomScalePageLayoutView => node.getAttribute("*zoomScalePageLayoutView").asDoubleOrNull()!;
+  int get workbookViewId => node.getAttribute("*workbookViewId").asIntOrNull()!;
 }
 ```
 The XML code block and the Dart code block above are in a mutually interchangeable relationship. Next, you will act as a converter. When I input XML to you, you need to provide Dart code. When I input Dart code, you need to provide XML.
