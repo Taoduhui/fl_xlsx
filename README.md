@@ -7,7 +7,9 @@ and [go-excelize](https://github.com/qax-os/excelize)
  
 strongly supported by ChatGPT
 
-# Reference
+this package is still under development
+
+## Reference
 
 - [ISO/IEC 29500-1-2016](https://www.iso.org/en/contents/data/standard/07/16/71691.html)
 - [ISO/IEC 29500-2-2021](https://www.iso.org/en/contents/data/standard/07/78/77818.html)

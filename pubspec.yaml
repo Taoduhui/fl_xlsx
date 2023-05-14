@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   archive: ^3.3.7
-  large_xml: ^1.1.0
+  large_xml: ^1.1.1
 
 dev_dependencies:
   flutter_test:

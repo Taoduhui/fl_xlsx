@@ -7,6 +7,8 @@ class SheetCell with XmlNodeWrapper {
     this.node = node;
   }
 
+  WorkSheet get worksheet => file._docRefs[node.sheetDoc.path] as WorkSheet;
+
   String get reference => node.getAttribute("*r") ?? "";
 
   int get style => node.getAttribute("*s").asIntOrDefault(0);
@@ -43,8 +45,7 @@ class SheetCell with XmlNodeWrapper {
   bool get isMergedCell => mergeCell != null;
 
   MergeCell? get mergeCell {
-    var sheet = file._docRefs[node.sheetDoc.path] as WorkSheet;
-    return sheet.mergeCells?.firstWhere((c) => c.range().isInRange(CellRef(reference)));
+    return worksheet.mergeCells?.firstWhere((c) => c.range().isInRange(CellRef(reference)));
   }
 
   String getString(){
@@ -182,13 +183,13 @@ class CellRef {
 class CellRefRange {
   String raw;
 
-  CellRefRange(this.raw);
+  CellRefRange([this.raw = "A1:A1"]);
 
-  String get from => raw._beforeColon()!;
+  String get from => raw.contains(":") ? raw._beforeColon()! : raw;
 
   set from(String v) => raw = "$v:$to";
 
-  String get to => raw._afterColon();
+  String get to => raw.contains(":") ? raw._afterColon() : from;
 
   set to(String v) => raw = "$from:$v";
 

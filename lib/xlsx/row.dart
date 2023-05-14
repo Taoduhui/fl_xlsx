@@ -20,6 +20,20 @@ class SheetRow extends Iterable<SheetCell> with XmlNodeWrapper{
     this.node = node;
   }
 
+  WorkSheet get worksheet => file._docRefs[node.sheetDoc.path] as WorkSheet;
+
+  @override
+  void mount(){
+    super.mount();
+    worksheet._rows[index] = this;
+  }
+
+  @override
+  void unmount(){
+    super.unmount();
+    worksheet._rows.remove(index);
+  }
+
   int get index =>  int.parse(node.getAttribute("*r")??"-1");
 
   String? get spans =>  node.getAttribute("*spans");
